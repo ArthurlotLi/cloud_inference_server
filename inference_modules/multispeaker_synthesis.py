@@ -53,5 +53,5 @@ class MultispeakerSynthesis:
     wavs = self._utility_class.speaker_synthesize_speech(texts=[text], speaker_id=speaker_id, utterance_id="")
     if wavs is None or len(wavs) == 0:
       return http.HTTPStatus.BAD_REQUEST, "Speech Synthesis failed. Please verify speaker id.", None
-
+    
     return http.HTTPStatus.OK, wavs, "encode_base64_list"

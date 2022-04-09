@@ -8,6 +8,9 @@
 from service_objects import *
 from inference_handler import *
 
+service_host = '127.0.0.1'
+service_port = 9164
+
 inference_handler = InferenceHandler()
 
 endpoints = {

@@ -63,12 +63,12 @@ class InferenceHandler:
     # Instantiate the module if it's not there already. 
     if module_name not in self.modules:
       print("[INFO] Inference Handler - Loading uninitialized module %s." % module_name)
-      self.module_classes[module_name] = self.module_classes[module_name](
+      self.modules[module_name] = self.module_classes[module_name](
         dynamic_load_class = dynamic_load_class,
       )
 
     # Some error checking to make sure the method even exists. 
-    method_func = getattr(self.module_classes[module_name], method_name, None)
+    method_func = getattr(self.modules[module_name], method_name, None)
     if not callable(method_func):
       print("[ERROR] Inference Handler - Received an unimplemented method name %s. Request rejected." % method_name)
       return (http.HTTPStatus.INTERNAL_SERVER_ERROR, "Malconfigured endpoint - unimplemented method \"%s\"!" % method_name)

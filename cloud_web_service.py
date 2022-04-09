@@ -7,6 +7,36 @@
 
 from service_definitions import *
 
+from flask import Flask
+from flask_restful import Resource, Api, reqparse
+
+# Define the application.
+app = Flask(__name__)
+
+# Define the API, which we will add our endpoints onto. 
+api = Api(app)
+
+def define_endpoints():
+  """
+  Given all the endpoints present in service_definitions, generate
+  flask restful resources. 
+  """
+  for endpoint_name in endpoints:
+    def post(self):
+      parser = reqparse.RequestParser()
+      parser.add_argument("speaker_id")
+      parser.add_argument("text")
+      args = parser.parse_args()
+
+      response_code, content = endpoints["synthesizeText"].process_response(args)
+
+      return content, response_code
+
+    endpoint_class = type(endpoint_name, (Resource,), {
+      "post": post,
+    })
+    api.add_resource(endpoint_class, '/%s' % endpoint_name)
 
 if __name__ == "__main__":
-  # endpoints["synthesizeText"].process_response("")
+  define_endpoints()
+  app.run(debug = True, host=service_host, port = service_port)
