@@ -8,11 +8,13 @@
 from service_objects import *
 from inference_handler import *
 
-inference_handler = 
+inference_handler = InferenceHandler()
 
 endpoints = {
   "synthesizeText": CloudEndpoint(
-      url_args = ["speaker_id", "model_id", "text"]
-      handler 
+      url_args = ["speaker_id", "model_id", "text"],
+      handler = inference_handler,
+      module_name = "MultispeakerSynthesis",
+      method_name = "synthesize_text",
     ),
 }

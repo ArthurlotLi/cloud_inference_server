@@ -5,7 +5,9 @@ Distributed Machine Learning Computation
 ------------------------------------------------------------------------------
 ------------------------------------------------------------------------------
 
-text
+Web server built to serve machine learning inference tasks, allowing 
+clients to leverage remote computing resources. Aka allowing my gaming 
+computer to support the home infrastructure when I'm not using it.
  
 ------------------------------------------------------------------------------
 Usage:
