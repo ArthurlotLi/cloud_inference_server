@@ -23,7 +23,8 @@ class MultispeakerSynthesis:
   def __init__(self, dynamic_load_class):
     """
     On startup, load the synthesizer into memory in anticipation of
-    incoming requests. 
+    incoming requests. All of this is done by the kotakee companion
+    utility code, so there's no copies of the same code to maintain. 
     """
     print("[DEBUG] MultispeakerSynthesis - Initializing model variant "+str(multispeaker_synthesis_model_num)+"...")
 

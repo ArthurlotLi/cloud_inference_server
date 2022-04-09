@@ -7,5 +7,6 @@
 
 from service_definitions import *
 
+
 if __name__ == "__main__":
-  endpoints["synthesizeText"].process_response("")
+  # endpoints["synthesizeText"].process_response("")
