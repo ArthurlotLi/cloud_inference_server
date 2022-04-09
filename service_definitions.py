@@ -12,7 +12,7 @@ inference_handler = InferenceHandler()
 
 endpoints = {
   "synthesizeText": CloudEndpoint(
-      url_args = ["speaker_id", "model_id", "text"],
+      url_args = ["speaker_id", "text"],
       handler = inference_handler,
       module_name = "MultispeakerSynthesis",
       method_name = "synthesize_text",

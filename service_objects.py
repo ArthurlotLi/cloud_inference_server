@@ -25,9 +25,8 @@ class CloudEndpoint:
     """
     # TODO: Debug code. 
     args = {
-      "speaker_id": "ELEANOR",
-      "model_id": "model6",
-      "text":"Hello world from Kotakee Companion",
+      "speaker_id": "VELVET",
+      "text":"Hello world from Kotakee Companion. How are you doing today?",
     }
     self.handler.process_response(
       args = args,

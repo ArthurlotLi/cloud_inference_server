@@ -8,10 +8,4 @@
 from service_definitions import *
 
 if __name__ == "__main__":
-  args = {
-    "speaker_id": "ELEANOR",
-    "model_id": "model6",
-    "text":"Hello world from Kotakee Companion",
-  }
-  query = ""
-  endpoints["synthesizeText"].process_response(query)
+  endpoints["synthesizeText"].process_response("")

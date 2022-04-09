@@ -7,6 +7,17 @@
 import base64
 import time
 
+def encode_base64_list(list):
+  """ As opposed to the others, takes in and returns a list. """
+  start_time = time.time()
+  encoded_list = []
+  total_len = 0
+  for item in list:
+    encoded_list.append(base64.b64encode(item))
+    total_len += len(item)
+  print("[DEBUG] Base64 - Encoding string of unencoded len %d took %.2f seconds." % (total_len, time.time()-start_time))
+  return encoded_list
+
 def encode_base64(string):
   start_time = time.time()
   encoded_string = base64.b64encode(string)

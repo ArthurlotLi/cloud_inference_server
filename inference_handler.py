@@ -12,7 +12,7 @@
 
 from handler_definitions import inference_handler_modules
 from utils.dynamic_import import dynamic_load_class
-from utils.base64_encoding import encode_base64
+from utils.base64_encoding import encode_base64, encode_base64_list
 
 import http
 
@@ -63,7 +63,9 @@ class InferenceHandler:
     # Instantiate the module if it's not there already. 
     if module_name not in self.modules:
       print("[INFO] Inference Handler - Loading uninitialized module %s." % module_name)
-      self.module_classes[module_name] = self.module_classes[module_name]()
+      self.module_classes[module_name] = self.module_classes[module_name](
+        dynamic_load_class = dynamic_load_class,
+      )
 
     # Some error checking to make sure the method even exists. 
     method_func = getattr(self.module_classes[module_name], method_name, None)
@@ -73,11 +75,18 @@ class InferenceHandler:
     
     # Finally, call the method. Any errors that occur from here on out
     # are reported in the method function. 
-    result_code, result_content, additional_processing =  method_func(args)
+    result_code, result_content, additional_processing = method_func(**args)
 
     if result_code == http.HTTPStatus.OK:
       # Check if we need to do some base64 encoding. 
-      if additional_processing == "base64_encode":
+      if additional_processing is None:
+        pass
+      elif additional_processing == "encode_base64":
         result_content = encode_base64(result_content)
+      elif additional_processing == "encode_base64_list":
+        result_content = encode_base64_list(result_content)
+      else:
+        # We should not allow unknown values - possibly a typo. 
+        assert(False) 
     
     return (result_code, result_content)
