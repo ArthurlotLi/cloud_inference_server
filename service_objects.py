@@ -22,7 +22,7 @@ class CloudEndpoint:
 
     Returns the response provided by the handler. 
     """
-    print("[INFO] Cloud Endpoint - %d - %d request received. Processing..." % (self.module_name, self.method_name))
+    print("[INFO] Cloud Endpoint - %s - %s request received. Processing..." % (self.module_name, self.method_name))
     response_code, content = self.handler.process_response(
       args = args,
       module_name = self.module_name,
