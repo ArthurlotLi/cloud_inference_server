@@ -45,4 +45,8 @@ def define_endpoints():
 
 if __name__ == "__main__":
   define_endpoints()
-  app.run(debug = False, host=service_host, port = service_port)
+  app.run(
+    threaded = service_threading, 
+    debug = False, 
+    host=service_host, 
+    port = service_port)
