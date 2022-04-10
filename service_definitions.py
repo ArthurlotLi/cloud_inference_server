@@ -8,7 +8,7 @@
 from service_objects import *
 from inference_handler import *
 
-service_host = '192.168.0.108'
+service_host = '192.168.0.232'
 service_port = 8080
 service_threading = True
 
