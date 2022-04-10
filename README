@@ -20,11 +20,12 @@ modules. Here's what you need to do.
 1. Import the repo of your module in the parent directory up from this 
    one (src).
 2. Make sure you have an up-to-date kotakee_companion repo if you're
-   using it's code for. 
-3. Define a new endpoint in service_definitions. 
-4. Create a new module in one of the module subfolders. 
-5. Add an entry in handler_definitions for your hanlder pointing out
-   the name of the class of your new module + the function to use. 
+   using it's code for endpoint functionality. 
+3. Define a new endpoint in service_definitions, including the name of
+   the function you plan to use. 
+4. Create a new module in one of the module subfolders.
+5. Add an entry in handler_definitions for your handler pointing out
+   the name of the class of your new module. 
 
 And that's it!
 
@@ -41,3 +42,7 @@ To host the cloud inference server, make sure you follow these steps:
 2. Install everything required. Run:
 
    pip install -r requirements.txt 
+
+3. Run the server. 
+
+   python cloud_wed_service.py
