@@ -8,8 +8,8 @@
 from service_objects import *
 from inference_handler import *
 
-service_host = '127.0.0.1'
-service_port = 9164
+service_host = '192.168.0.108'
+service_port = 8080
 
 inference_handler = InferenceHandler()
 

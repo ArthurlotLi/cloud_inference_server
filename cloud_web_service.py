@@ -16,6 +16,12 @@ app = Flask(__name__)
 # Define the API, which we will add our endpoints onto. 
 api = Api(app)
 
+# Define a basic entry point API for heartbeats. 
+class BasicEndpoint(Resource):
+  def get(self):
+    return {}
+api.add_resource(BasicEndpoint, "/")
+
 def define_endpoints():
   """
   Given all the endpoints present in service_definitions, generate
@@ -39,4 +45,4 @@ def define_endpoints():
 
 if __name__ == "__main__":
   define_endpoints()
-  app.run(debug = True, host=service_host, port = service_port)
+  app.run(debug = False, host=service_host, port = service_port)
