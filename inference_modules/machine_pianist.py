@@ -53,8 +53,8 @@ class MachinePianist:
     
     with open(temp_file, "rb") as midi_file:
       # Encode the midi as a base 64 string so that it can be sent over POST.
-      encoded_midi_file = base64.b64encode(midi_file.read())
+      midi = (midi_file.read())
     
     os.remove(temp_file)
 
-    return http.HTTPStatus.OK, encoded_midi_file, "encode_base64"
+    return http.HTTPStatus.OK, midi, "encode_base64"
