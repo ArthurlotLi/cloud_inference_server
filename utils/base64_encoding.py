@@ -22,10 +22,11 @@ def encode_base64_list(list):
   return encoded_dict
 
 def encode_base64(string):
+  encoded_dict = {}
   start_time = time.time()
-  encoded_string = str(base64.b64encode(string), "utf-8")
+  encoded_dict[0] = str(base64.b64encode(string), "utf-8")
   print("[DEBUG] Base64 - Encoding string of unencoded len %d took %.2f seconds." % (len(string), time.time()-start_time))
-  return encoded_string
+  return encoded_dict
 
 def decode_base64(string):
   start_time = time.time()
