@@ -21,4 +21,10 @@ endpoints = {
       module_name = "MultispeakerSynthesis",
       method_name = "synthesize_text",
     ),
+  "performMidi": CloudEndpoint(
+      url_args = ["midi"],
+      handler = inference_handler,
+      module_name = "MachinePianist",
+      method_name = "perform_midi",
+    ),
 }

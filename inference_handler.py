@@ -10,7 +10,7 @@
 # the processed result or an error message. For many cases, the 
 # processed result is a base64 encoded string ready for return. 
 
-from handler_definitions import inference_handler_modules
+from handler_definitions import inference_handler_modules, inference_handler_modules_startup
 from utils.dynamic_import import dynamic_load_class
 from utils.base64_encoding import encode_base64, encode_base64_list
 
@@ -26,6 +26,7 @@ class InferenceHandler:
     self.module_classes = {}
     self.modules = {}
     self._load_all_modules()
+    self._initialize_startup_modules()
 
   def _load_all_modules(self):
     """
@@ -48,6 +49,19 @@ class InferenceHandler:
       assert loaded_class is not None
       self.module_classes[module_class_name] = loaded_class
 
+  def _initialize_startup_modules(self):
+    """
+    There is an edge case of pytorch failing to load CUDNN if tensorflow
+    has been loaded first. To mitigate this, load pytorch stuff first.
+    """
+    for index in inference_handler_modules_startup:
+      module_name = inference_handler_modules[index].rsplit(".", 1)[1]
+      assert module_name in self.module_classes
+      print("[INFO] Inference Handler - Loading startup module %s." % module_name)
+      self.modules[module_name] = self.module_classes[module_name](
+        dynamic_load_class = dynamic_load_class,
+      )
+
   def process_response(self, args, module_name, method_name):
     """
     When a response has been extracted and deemed to be our
@@ -55,6 +69,8 @@ class InferenceHandler:
     
     Returns the response provided by the handler. 
     """
+    print("[INFO] Inference Handler - Processing %s method %s request with %d args." 
+      % (module_name, method_name, len(args)))
     # We'll know pretty quick if the endpoint wasn't configured right. 
     if module_name not in self.module_classes:
       print("[ERROR] Inference Handler - Received an unimplemented module %s. Request rejected." % module_name)

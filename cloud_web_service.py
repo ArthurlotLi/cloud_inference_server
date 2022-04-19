@@ -29,14 +29,14 @@ def define_endpoints():
   flask restful resources. 
   """
   for endpoint_name in endpoints:
-    def post(self):
+    # Shove in the stuff we need as defaults. Feels very hacky... but
+    # it works! 
+    def post(self, endpoint_name = endpoint_name, endpoints = endpoints):
       parser = reqparse.RequestParser()
-      parser.add_argument("speaker_id")
-      parser.add_argument("text")
+      for arg in endpoints[endpoint_name].url_args:
+        parser.add_argument(arg)
       args = parser.parse_args()
-
-      response_code, content = endpoints["synthesizeText"].process_response(args)
-
+      response_code, content = endpoints[endpoint_name].process_response(args)
       return content, response_code
 
     endpoint_class = type(endpoint_name, (Resource,), {
