@@ -31,15 +31,17 @@ def dynamic_load_class(module_name, class_name):
   # Fetch the module first.
   try:
     module = __import__(module_file_name)
-  except:
+  except Exception as e:
     print("[ERROR] Failed to import module " + module_file_name + " from subdirectory '" + module_folder_path + "'.")
+    print(e)
     return None
 
   # Return the class. 
   try:
     imported_class = getattr(module, class_name)
-  except:
+  except Exception as e:
     print("[ERROR] Failed to import class_name " + class_name + ".")
+    print(e)
     return None
 
   return imported_class

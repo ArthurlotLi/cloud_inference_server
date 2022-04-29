@@ -27,6 +27,11 @@ modules. Here's what you need to do.
 5. Add an entry in handler_definitions for your handler pointing out
    the name of the class of your new module. 
 
+6. (Docker) Update the Dockerfile to do the following:
+   - Copy your new repository
+   - Install the requirements.txt of your new repository
+   - Copy any files from kotakee_companion that you need.
+
 And that's it!
 
 ------------------------------------------------------------------------------
@@ -46,3 +51,20 @@ To host the cloud inference server, make sure you follow these steps:
 3. Run the server. 
 
    python cloud_wed_service.py
+
+------------------------------------------------------------------------------
+Usage: Docker Container
+------------------------------------------------------------------------------
+
+To create a docker container, you'll need to take a few simple steps
+
+1. Copy the up-to-date Dockerfile to the parent directory (src) that 
+   contains all of the source repositories specified in the file.
+
+2. Run the following to build the container image: 
+
+   docker build --tag cloud_inference_server:1.0 .
+
+3. Once the container image has been created, 
+
+

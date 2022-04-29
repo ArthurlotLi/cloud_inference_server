@@ -1,3 +1,6 @@
 flask
 flask-restful
 gevent
+
+numpy
+pandas

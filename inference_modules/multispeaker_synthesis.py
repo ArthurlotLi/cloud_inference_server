@@ -19,6 +19,7 @@ class MultispeakerSynthesis:
   # Given model variants location, how do we get to synthesizer models? 
   _model_variants_synthesizer_subpath = "synthesizer"
   _model_suffix = ".pt"
+  _vocoder = "sv2tts"
 
   def __init__(self, dynamic_load_class):
     """
@@ -39,7 +40,8 @@ class MultispeakerSynthesis:
       model_variants_location = multispeaker_synthesis_models_location, 
       speakers_location = multispeaker_synthesis_speakers_location, 
       inference_location = multispeaker_synthesis_inference_location, 
-      inference_class_name = multispeaker_synthesis_inference_class_name
+      inference_class_name = multispeaker_synthesis_inference_class_name,
+      vocoder = self._vocoder
     )
 
   def synthesize_text(self, speaker_id, text):
