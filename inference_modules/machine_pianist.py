@@ -66,10 +66,10 @@ class MachinePianist:
       import librosa
       temp_file2 = temp_file+ ".wav"
       print("[INFO] Machine Pianist - Running TiMidity to generate mp3..")
-      os.system("dependencies\\TiMidity\\timidity %s -Ow -o %s" % (temp_file, ))
+      os.system("dependencies\\TiMidity\\timidity %s -Ow -o %s" % (temp_file, temp_file2))
 
       # Load the wav as a string. 
-      wav, source_sr = librosa.load(str(temp_file), sr=None)
+      wav, source_sr = librosa.load(str(temp_file2), sr=None)
       response.append(wav, source_sr)
 
       os.remove(temp_file2)
