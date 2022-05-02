@@ -40,7 +40,7 @@ class MachinePianist:
     Given the base64 encoded midi string, save it in a temp file and
     throw it over to the utility code. 
     """
-    generate_wav = bool(generate_wav)
+    generate_wav = int(generate_wav) == 1
 
     decoded_midi_file = base64.b64decode(midi)
     new_song_file = open(machine_pianist_temp_file, "wb")
