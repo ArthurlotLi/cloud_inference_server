@@ -62,17 +62,10 @@ class MachinePianist:
 
     # If we are also returning a mp3 file with this request, generate
     # it from the temp file. 
-    if generate_wav is True:      
-      import sf2_loader as sf
+    if generate_wav is True:   
+      print("[INFO] Machine Pianist - Running TiMidity to generate wav..")
       temp_file2 = temp_file+ ".wav"
-      loader = sf.sf2_loader("dependencies\\UprightPianoKW-SF2-20220221\\UprightPianoKW-20220221.sf2")
-      loader.export_midi_file(temp_file, name=temp_file2, format="wav")
-
-      print("[INFO] Machine Pianist - Running midi2audio to generate wav..")
-
-      #fs = FluidSynth('dependencies\\UprightPianoKW-SF2-20220221\\UprightPianoKW-20220221.sf2')
-      #fs.midi_to_audio(temp_file, temp_file2)
-      #os.system("midi2audio %s %s" % (temp_file, temp_file2))
+      os.system("dependencies\\TiMidity\\timidity %s -Ow -o %s" % (temp_file, temp_file2))
 
       # Load the wav as a string. 
       with open(temp_file2, "rb") as audio_file:

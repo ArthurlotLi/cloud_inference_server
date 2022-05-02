@@ -74,8 +74,4 @@ Prerequisites
 
 1. pip3 install -r requirements.txt 
 
-2. For machine pianist to mp3, you will need pysox, which requires sox:
-
-   a. Get sox: http://sox.sourceforge.net/
-
-   b. Get pysox: pip install sox
+2. For machine pianist to wav, sf2_loader requires ffmpeg. 
