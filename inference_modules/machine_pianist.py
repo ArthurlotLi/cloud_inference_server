@@ -70,7 +70,8 @@ class MachinePianist:
 
       # Load the wav as a string. 
       wav, source_sr = librosa.load(str(temp_file2), sr=None)
-      response.append(wav, source_sr)
+      response.append(wav) 
+      response.append(source_sr)
 
       os.remove(temp_file2)
     
