@@ -65,13 +65,14 @@ class MachinePianist:
     if generate_wav is True:
       import librosa
       temp_file2 = temp_file+ ".wav"
-      print("[INFO] Machine Pianist - Running TiMidity to generate mp3..")
+      print("[INFO] Machine Pianist - Running TiMidity to generate wav..")
       os.system("dependencies\\TiMidity\\timidity %s -Ow -o %s" % (temp_file, temp_file2))
 
       # Load the wav as a string. 
-      wav, source_sr = librosa.load(str(temp_file2), sr=None)
-      response.append(wav) 
-      response.append(source_sr)
+      with open(temp_file2, "rb") as audio_file:
+        # Encode the midi as a base 64 string so that it can be sent over POST.
+        audio = (audio_file.read())
+        response.append(audio)
 
       os.remove(temp_file2)
     
