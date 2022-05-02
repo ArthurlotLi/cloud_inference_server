@@ -103,9 +103,6 @@ RUN apt-get install libsndfile1-dev -y
 RUN apt-get install libasound-dev libportaudio2 libportaudiocpp0 portaudio19-dev -y
 RUN pip3 install pyaudio
 
-# Machine Pianist dependencies
-RUN brew install timidity
-
 #
 # Cloud Inference Server Runtime 
 #

@@ -62,13 +62,13 @@ class MachinePianist:
 
     # If we are also returning a mp3 file with this request, generate
     # it from the temp file. 
-    if generate_wav is True:
-      from midi2audio import FluidSynth
-      
+    if generate_wav is True:      
+      """
       temp_file2 = temp_file+ ".wav"
       print("[INFO] Machine Pianist - Running midi2audio to generate wav..")
-      fs = FluidSynth('dependencies\\UprightPianoKW-SF2-20220221\\UprightPianoKW-20220221.sf2')
-      fs.midi_to_audio(temp_file, temp_file2)
+
+      #fs = FluidSynth('dependencies\\UprightPianoKW-SF2-20220221\\UprightPianoKW-20220221.sf2')
+      #fs.midi_to_audio(temp_file, temp_file2)
       #os.system("midi2audio %s %s" % (temp_file, temp_file2))
 
       # Load the wav as a string. 
@@ -78,6 +78,8 @@ class MachinePianist:
         response.append(audio)
 
       os.remove(temp_file2)
+      """
+      response.append("DUMMY")
     
     os.remove(temp_file)
 
