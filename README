@@ -61,8 +61,21 @@ To create a docker container, you'll need to take a few simple steps
 1. Copy the up-to-date Dockerfile to the parent directory (src) that 
    contains all of the source repositories specified in the file.
 
-2. Run the following to build the container image in the parent dir: 
+2. Run the following to build the container image: 
 
-   docker build -f cloud_inference_server/Dockerfile --tag cloud_inference_server:1.0 .
+   docker build --tag cloud_inference_server:1.0 .
 
+3. Once the container image has been created, run it. You can do this
+   from docker desktop 
 
+-----------------------------------------------------------------------------
+Prerequisites
+------------------------------------------------------------------------------
+
+1. pip3 install -r requirements.txt 
+
+2. For machine pianist to mp3, you will need pysox, which requires sox:
+
+   a. Get sox: http://sox.sourceforge.net/
+
+   b. Get pysox: pip install sox

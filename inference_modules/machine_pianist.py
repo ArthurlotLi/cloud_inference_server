@@ -35,11 +35,13 @@ class MachinePianist:
                                                   inference_folder=machine_pianist_inference_folder,
                                                    inference_class= machine_pianist_inference_class)
 
-  def perform_midi(self, midi: str):
+  def perform_midi(self, midi: str, generate_wav: str):
     """
     Given the base64 encoded midi string, save it in a temp file and
     throw it over to the utility code. 
     """
+    generate_wav = bool(generate_wav)
+
     decoded_midi_file = base64.b64decode(midi)
     new_song_file = open(machine_pianist_temp_file, "wb")
     new_song_file.write(decoded_midi_file)
@@ -51,10 +53,27 @@ class MachinePianist:
     if temp_file is None:
       return http.HTTPStatus.BAD_REQUEST, "Machine Pianist inference failed. Verify integrity of file.", None
     
+    response = []
+
     with open(temp_file, "rb") as midi_file:
       # Encode the midi as a base 64 string so that it can be sent over POST.
       midi = (midi_file.read())
+      response.append(midi)
+
+    # If we are also returning a mp3 file with this request, generate
+    # it from the temp file. 
+    if generate_wav is True:
+      import librosa
+      temp_file2 = temp_file+ ".wav"
+      print("[INFO] Machine Pianist - Running TiMidity to generate mp3..")
+      os.system("dependencies\\TiMidity\\timidity %s -Ow -o %s" % (temp_file, ))
+
+      # Load the wav as a string. 
+      wav, source_sr = librosa.load(str(temp_file), sr=None)
+      response.append(wav, source_sr)
+
+      os.remove(temp_file2)
     
     os.remove(temp_file)
 
-    return http.HTTPStatus.OK, midi, "encode_base64"
+    return http.HTTPStatus.OK, response, "encode_base64_list"
