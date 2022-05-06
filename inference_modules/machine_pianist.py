@@ -33,7 +33,9 @@ class MachinePianist:
     assert self._utility_class_type is not None
     self._utility_class = self._utility_class_type(model_path=machine_pianist_model_path,
                                                   inference_folder=machine_pianist_inference_folder,
-                                                   inference_class= machine_pianist_inference_class)
+                                                  inference_class= machine_pianist_inference_class,
+                                                  scaler_X_path = machine_pianist_scaler_X_path,
+                                                  scaler_Y_path = machine_pianist_scaler_Y_path)
 
   def perform_midi(self, midi: str, generate_wav: str):
     """
