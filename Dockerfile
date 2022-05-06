@@ -8,7 +8,7 @@
 FROM nvidia/cuda:11.6.0-cudnn8-runtime-ubuntu18.04
 
 # Port through which we'll expose the cloud inference server.
-EXPOSE 8080
+EXPOSE 9121
 
 # Get python.
 RUN apt-get update -y
