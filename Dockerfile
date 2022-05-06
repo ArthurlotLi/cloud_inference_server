@@ -110,4 +110,4 @@ RUN pip3 install pyaudio
 # All done. This command runs the cloud inference server when the
 # container starts up. 
 WORKDIR /src/cloud_inference_server
-CMD PYTHONIOENCODING=utf-8 python3 cloud_web_service.py
+CMD python3 cloud_web_service.py
