@@ -119,7 +119,7 @@ RUN apt-get install libasound-dev libportaudio2 libportaudiocpp0 portaudio19-dev
 RUN pip3 install pyaudio
 
 # Machine pianist to wav
-RUN apt-get install timidity
+RUN apt-get install timidity -y
 
 #
 # Cloud Inference Server Runtime 
