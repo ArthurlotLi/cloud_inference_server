@@ -78,9 +78,9 @@ class MachinePianist:
       temp_file2 = temp_file+ ".wav"
 
       if platform.system() == "Windows":
-        os.system("dependencies\\TiMidity\\timidity %s -Ow -o %s --config-string=\"soundfont %s\"" % (temp_file, temp_file2, self._soundfont))
+        os.system("dependencies\\TiMidity\\timidity %s -Ow -o %s --output-24bit --config-string=\"soundfont %s\"" % (temp_file, temp_file2, self._soundfont))
       else:
-        os.system("timidity %s -Ow -o %s" % (temp_file, temp_file2))
+        os.system("timidity %s -Ow -o %s --output-24bit --config-string=\"soundfont %s\"" % (temp_file, temp_file2, self._soundfont))
 
       # Load the wav as a string. 
       with open(temp_file2, "rb") as audio_file:
