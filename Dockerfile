@@ -3,6 +3,14 @@
 # a container image, from src, run:
 #
 # docker build --progress plain -f cloud_inference_server/Dockerfile --tag cloud_inference_server:1.0 .
+#
+# For building the docker container in WSL2, make sure no duplicates
+# of the container exist and that /src does not exist then run these
+# commands:
+#
+# sudo rm /src -r; 
+# sudo cp /mnt/c/src /src -r; sudo chmod -R 777 /src; cd /src; 
+# sudo docker build --progress plain -f cloud_inference_server/Dockerfile --tag cloud_inference_server:1.0 .; sudo docker run --gpus all --publish 9121:9121 -it cloud_inference_server:1.0
 
 # Start with the base nvidia/cuda image to enable GPU-accelerated apps.
 FROM nvidia/cuda:11.6.0-cudnn8-runtime-ubuntu18.04
@@ -17,6 +25,9 @@ RUN apt-get install -y python3-pip
 #RUN python3 -m pip install -U --force-reinstall pip
 RUN python3 -m pip install --upgrade pip
 
+# This solves a massive heartache with UnicodeDecodeError. Most 
+# containers start with the LANG=C set, which can be annoying. 
+ENV LANG C.UTF-8
 
 # We will mimic the C:\src setup.
 WORKDIR /src
@@ -79,8 +90,12 @@ COPY machine_pianist/utils \
   machine_pianist/utils
 
 # Models
-COPY machine_pianist/production_models/model1 \
-  machine_pianist/production_models/model1
+COPY machine_pianist/production_models/model6 \
+  machine_pianist/production_models/model6
+COPY machine_pianist/saved_models/model6_scaler_X.bin \
+  machine_pianist/saved_models/model6_scaler_X.bin
+COPY machine_pianist/saved_models/model6_scaler_Y.bin \
+  machine_pianist/saved_models/model6_scaler_Y.bin  
 
 # Kotakee Companion
 COPY kotakee_companion/speech_server/piano_player \
@@ -102,6 +117,9 @@ RUN pip3 install torch torchvision torchaudio --extra-index-url https://download
 RUN apt-get install libsndfile1-dev -y
 RUN apt-get install libasound-dev libportaudio2 libportaudiocpp0 portaudio19-dev -y
 RUN pip3 install pyaudio
+
+# Machine pianist to wav
+RUN apt-get install timidity
 
 #
 # Cloud Inference Server Runtime 

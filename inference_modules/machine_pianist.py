@@ -12,11 +12,14 @@
 
 from inference_modules_config import *
 
+import platform
 import os
 import http
 import base64
 
 class MachinePianist:
+  _soundfont = "dependencies/YDP-GrandPiano-SF2-20160804/YDP-GrandPiano-20160804.sf2"
+
   def __init__(self, dynamic_load_class):
     """
     On startup. Load the machine pianist into memory, with all of this
@@ -42,7 +45,13 @@ class MachinePianist:
     Given the base64 encoded midi string, save it in a temp file and
     throw it over to the utility code. 
     """
-    generate_wav = int(generate_wav) == 1
+    # If we get a byte array or a bytes-like object, make sure it's a
+    # string. 
+    if isinstance(midi, (bytes, bytearray)):
+      midi = midi.decode()
+
+    if generate_wav is not None:
+      generate_wav = int(generate_wav) == 1
 
     decoded_midi_file = base64.b64decode(midi)
     new_song_file = open(machine_pianist_temp_file, "wb")
@@ -64,10 +73,14 @@ class MachinePianist:
 
     # If we are also returning a mp3 file with this request, generate
     # it from the temp file. 
-    if generate_wav is True:   
+    if generate_wav is not None and generate_wav is True:   
       print("[INFO] Machine Pianist - Running TiMidity to generate wav..")
       temp_file2 = temp_file+ ".wav"
-      os.system("dependencies\\TiMidity\\timidity %s -Ow -o %s" % (temp_file, temp_file2))
+
+      if platform.system() == "Windows":
+        os.system("dependencies\\TiMidity\\timidity %s -Ow -o %s --config-string=\"soundfont %s\"" % (temp_file, temp_file2, self._soundfont))
+      else:
+        os.system("timidity %s -Ow -o %s" % (temp_file, temp_file2))
 
       # Load the wav as a string. 
       with open(temp_file2, "rb") as audio_file:

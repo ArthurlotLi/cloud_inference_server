@@ -32,9 +32,12 @@ def define_endpoints():
     # Shove in the stuff we need as defaults. Feels very hacky... but
     # it works! 
     def post(self, endpoint_name = endpoint_name, endpoints = endpoints):
+      """
+      Parses all arguments as Unicode strings. 
+      """
       parser = reqparse.RequestParser()
       for arg in endpoints[endpoint_name].url_args:
-        parser.add_argument(arg)
+        parser.add_argument(arg, type=str)
       args = parser.parse_args()
       response_code, content = endpoints[endpoint_name].process_response(args)
       return content, response_code

@@ -50,6 +50,11 @@ class MultispeakerSynthesis:
     synthesize a wav and provide that back to the handler, who will
     encode it in base64 to be consumed by users. 
     """
+    # If we get a byte array or a bytes-like object, make sure it's a
+    # string. 
+    if isinstance(text, (bytes, bytearray)):
+      text = text.decode()
+
     # Use the utility to manage everything. We will get an array of
     # wavs back. 
     wavs = self._utility_class.speaker_synthesize_speech(texts=[text], speaker_id=speaker_id, utterance_id="")
