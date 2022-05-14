@@ -62,6 +62,7 @@ if __name__ == "__main__":
 
   # Use WSGIServer instead. 
   print("[INFO] Cloud Inference - Server is now online at http://%s:%d." % (service_host, service_port))
+  pool = Pool()
   app.debug = False 
-  http_server = WSGIServer((service_host, service_port), app)
+  http_server = WSGIServer((service_host, service_port), app, spawn=pool)
   http_server.serve_forever()
