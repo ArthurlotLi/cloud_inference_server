@@ -1,6 +1,6 @@
 
-# Too large for git. 
-dependencies/YDP-GrandPiano-SF2-20160804/YDP-GrandPiano-20160804.sf2
+# No longer used dependency. 
+dependencies/YDP-GrandPiano-SF2-20160804
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
