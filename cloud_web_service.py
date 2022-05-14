@@ -10,6 +10,7 @@ from service_definitions import *
 from flask import Flask
 from flask_restful import Resource, Api, reqparse
 from gevent.pywsgi import WSGIServer
+from gevent.pool import Pool
 
 # Define the application.
 app = Flask(__name__)
@@ -53,15 +54,14 @@ if __name__ == "__main__":
   # NOTE: Obsolete, as Python Flask is not a production web server.
   # It can only handle one request as a time. This led to some requests
   # spontaneously failing, timing out, etc.
-  app.run(
-    threaded = service_threading, 
-    debug = False, 
-    host=service_host, 
-    port = service_port)
-
+  #app.run(
+    #threaded = service_threading, 
+    #debug = False, 
+    #host=service_host, 
+    #port = service_port)
 
   # Use WSGIServer instead. 
-  #print("[INFO] Cloud Inference - Server is now online at http://%s:%d." % (service_host, service_port))
-  #app.debug = True 
-  #http_server = WSGIServer((service_host, service_port), app)
-  #http_server.serve_forever()
+  print("[INFO] Cloud Inference - Server is now online at http://%s:%d." % (service_host, service_port))
+  app.debug = False 
+  http_server = WSGIServer((service_host, service_port), app)
+  http_server.serve_forever()
