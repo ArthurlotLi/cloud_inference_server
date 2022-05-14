@@ -71,4 +71,8 @@ if __name__ == "__main__":
 
   print("[INFO] Cloud Inference - Server is now online at http://%s:%d." % (service_host, service_port))
   app.debug = False 
-  http_server = wsgi.server(eventlet.listen(service_host, service_port), app)
+  try:
+    http_server = wsgi.server(eventlet.listen((service_host, service_port)),  app)
+  except Exception as e:
+    print("[ERROR] Cloud Inference - Server error! Exception:")
+    print(e)
