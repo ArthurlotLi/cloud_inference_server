@@ -50,9 +50,10 @@ def define_endpoints():
     })
     api.add_resource(endpoint_class, '/%s' % endpoint_name)
 
-if __name__ == "__main__":
-  define_endpoints()
+# Define endpoints now. 
+define_endpoints()
 
+if __name__ == "__main__":
   # NOTE: Obsolete, as Python Flask is not a production web server.
   # It can only handle one request as a time. This led to some requests
   # spontaneously failing, timing out, etc.
