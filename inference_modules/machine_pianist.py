@@ -57,8 +57,7 @@ class MachinePianist:
       generate_wav = int(generate_wav) == 1
 
     # A filename is recommended for multithreaded processing. 
-    if filename is None:
-      filename = machine_pianist_temp_file
+    filename = machine_pianist_temp_file
 
     # To avoid super edge case filename conflicts. 
     while(os.path.exists(filename)):
