@@ -61,7 +61,7 @@ class MachinePianist:
       filename = machine_pianist_temp_file
 
     # To avoid super edge case filename conflicts. 
-    while(os.exists(filename)):
+    while(os.path.exists(filename)):
       filename = filename + "1"
 
     decoded_midi_file = base64.b64decode(midi)
