@@ -9,8 +9,10 @@ from service_definitions import *
 
 from flask import Flask
 from flask_restful import Resource, Api, reqparse
-from gevent.pywsgi import WSGIServer
-from gevent.pool import Pool
+#from gevent.pywsgi import WSGIServer
+#from gevent.pool import Pool
+import eventlet
+from eventlet import wsgi
 
 # Define the application.
 app = Flask(__name__)
@@ -61,8 +63,12 @@ if __name__ == "__main__":
     #port = service_port)
 
   # Use WSGIServer instead. 
+  #print("[INFO] Cloud Inference - Server is now online at http://%s:%d." % (service_host, service_port))
+  #pool = Pool()
+  #app.debug = False 
+  #http_server = WSGIServer((service_host, service_port), app, spawn=pool)
+  #http_server.serve_forever()
+
   print("[INFO] Cloud Inference - Server is now online at http://%s:%d." % (service_host, service_port))
-  pool = Pool()
   app.debug = False 
-  http_server = WSGIServer((service_host, service_port), app, spawn=pool)
-  http_server.serve_forever()
+  http_server = wsgi.server(eventlet.listen(service_host, service_port), app)
