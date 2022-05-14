@@ -16,9 +16,12 @@ import platform
 import os
 import http
 import base64
+from pydub import AudioSegment
 
 class MachinePianist:
-  _soundfont = "dependencies/YDP-GrandPiano-SF2-20160804/YDP-GrandPiano-20160804.sf2"
+  #_soundfont = "dependencies/SalamanderGrandPiano-SF2-V3+20200602/SalamanderGrandPiano-V3+20200602.sf2"
+  #_soundfont = "dependencies/YDP-GrandPiano-SF2-20160804/YDP-GrandPiano-20160804.sf2"
+  _soundfont = "dependencies/UprightPianoKW-SF2-20220221/UprightPianoKW-20220221.sf2"
 
   def __init__(self, dynamic_load_class):
     """
@@ -74,21 +77,27 @@ class MachinePianist:
     # If we are also returning a mp3 file with this request, generate
     # it from the temp file. 
     if generate_wav is not None and generate_wav is True:   
-      print("[INFO] Machine Pianist - Running TiMidity to generate wav..")
+      print("[INFO] Machine Pianist - Running TiMidity to generate wav...")
       temp_file2 = temp_file+ ".wav"
+      temp_file3 = temp_file+ ".mp3"
 
       if platform.system() == "Windows":
-        os.system("dependencies\\TiMidity\\timidity %s -Ow -o %s --output-24bit --config-string=\"soundfont %s\"" % (temp_file, temp_file2, self._soundfont))
+        os.system("dependencies\\TiMidity\\timidity %s -Ow -o %s -A120 --output-24bit --config-string=\"soundfont %s\"" % (temp_file, temp_file2, self._soundfont))
       else:
-        os.system("timidity %s -Ow -o %s --output-24bit --config-string=\"soundfont %s\"" % (temp_file, temp_file2, self._soundfont))
+        os.system("timidity %s -Ow -o %s --output-24bit -A120 --config-string=\"soundfont %s\"" % (temp_file, temp_file2, self._soundfont))
+
+      # Convert to mp3
+      print("[INFO] Machine Pianist - Converting from wav to mp3 with PyDub...")
+      AudioSegment.from_wav(temp_file2).export(temp_file3, format="mp3")
 
       # Load the wav as a string. 
-      with open(temp_file2, "rb") as audio_file:
+      with open(temp_file3, "rb") as audio_file:
         # Encode the midi as a base 64 string so that it can be sent over POST.
         audio = (audio_file.read())
         response.append(audio)
 
       os.remove(temp_file2)
+      os.remove(temp_file3)
     
     os.remove(temp_file)
 
