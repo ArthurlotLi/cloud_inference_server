@@ -22,7 +22,7 @@ endpoints = {
       method_name = "synthesize_text",
     ),
   "performMidi": CloudEndpoint(
-      url_args = ["midi", "generate_wav"],
+      url_args = ["midi", "generate_wav", "filename"],
       handler = inference_handler,
       module_name = "MachinePianist",
       method_name = "perform_midi",

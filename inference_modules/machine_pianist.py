@@ -40,7 +40,7 @@ class MachinePianist:
                                                   scaler_X_path = machine_pianist_scaler_X_path,
                                                   scaler_Y_path = machine_pianist_scaler_Y_path)
 
-  def perform_midi(self, midi: str, generate_wav: str):
+  def perform_midi(self, midi: str, generate_wav: str, filename = str):
     """
     Given the base64 encoded midi string, save it in a temp file and
     throw it over to the utility code. 
@@ -53,13 +53,17 @@ class MachinePianist:
     if generate_wav is not None:
       generate_wav = int(generate_wav) == 1
 
+    # A filename is recommended for multithreaded processing. 
+    if filename is None:
+      filename = machine_pianist_temp_file
+
     decoded_midi_file = base64.b64decode(midi)
-    new_song_file = open(machine_pianist_temp_file, "wb")
+    new_song_file = open(filename, "wb")
     new_song_file.write(decoded_midi_file)
     new_song_file.close()
 
     # Overwrite the file we just wrote. 
-    temp_file = self._utility_class.perform_midi(machine_pianist_temp_file, machine_pianist_temp_file)
+    temp_file = self._utility_class.perform_midi(filename, filename)
 
     if temp_file is None:
       return http.HTTPStatus.BAD_REQUEST, "Machine Pianist inference failed. Verify integrity of file.", None
