@@ -120,6 +120,7 @@ RUN pip3 install pyaudio
 
 # Machine pianist to wav
 RUN apt-get install timidity -y
+RUN apt install -y ffmpeg
 
 #
 # Cloud Inference Server Runtime 
