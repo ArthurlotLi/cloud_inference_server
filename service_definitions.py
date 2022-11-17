@@ -9,7 +9,7 @@ from service_objects import *
 from inference_handler import *
 
 service_host = '0.0.0.0'
-service_port = 9121
+service_port = 9191
 service_threading = True
 
 inference_handler = InferenceHandler()
